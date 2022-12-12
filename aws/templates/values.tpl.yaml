@@ -1,0 +1,29 @@
+elasticsearch:
+  enabled: false
+
+postgresql:
+  config:
+    host: ${POSTGRESQL_HOST}
+  auth:
+    password: ${POSTGRESQL_PASSWORD}
+
+oap:
+  replicas: 2
+  image:
+    repository: ghcr.io/apache/skywalking/oap
+    tag: 2fa821d9f5b6ace1d510db79d5a9e47fad7f78b3
+  storageType: postgresql
+  env:
+    SW_TELEMETRY: prometheus
+    SW_ENVOY_METRIC_ALS_HTTP_ANALYSIS: mx-mesh,k8s-mesh
+    SW_ENVOY_METRIC_ALS_TCP_ANALYSIS: mx-mesh,k8s-mesh
+  envoy:
+    als:
+      enabled: true
+  ports:
+    http-monitoring: 1234
+
+ui:
+  image:
+    repository: ghcr.io/apache/skywalking/ui
+    tag: 2fa821d9f5b6ace1d510db79d5a9e47fad7f78b3

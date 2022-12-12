@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${configmap_name}
+  namespace: ${namespace}
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes  auto;
+    events {
+      worker_connections  102400;
+    }
+    http {
+      server {
+        listen       9999;
+        server_name  localhost;
+        access_log off;
+        location / {
+          proxy_pass http://${next_service}:9999;
+          proxy_http_version 1.1;
+        }
+      }
+    }

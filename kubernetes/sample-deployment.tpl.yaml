@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${service_name}
+  namespace: ${namespace}
+spec:
+  selector:
+    matchLabels:
+      app: ${service_name}
+  replicas: ${replicas}
+  template:
+    metadata:
+      labels:
+        app: ${service_name}
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 9999
+        volumeMounts:
+            - name: ${configmap}
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+
+      volumes:
+      - name: ${configmap}
+        configMap:
+          name: ${configmap}
+          items:
+            - key: nginx.conf
+              path: nginx.conf
