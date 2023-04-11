@@ -11,7 +11,7 @@ region         = "ap-east-1"
 EOF
 ```
 
-All available variables can be found in [`variables.tf`](aws/variables.tf).
+All available variables can be found in [`variables.tf`](variables.tf).
 
 ### Initialize Terraform
 
